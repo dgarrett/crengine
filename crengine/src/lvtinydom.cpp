@@ -12255,6 +12255,11 @@ inline bool IsWordSeparator( lChar32 ch )
     return lStr_isWordSeparator(ch);
 }
 
+inline bool dygar( lChar32 ch )
+{
+    return ch == '.' || ch == '"' || ch == '?' || ch == '!' || ch == '(' || ch == ')' || ch == '\'' || ch == U'‘' || ch == U'’';
+}
+
 inline bool IsWordSeparatorOrNull( lChar32 ch )
 {
     if (ch==0) return true;
@@ -12305,6 +12310,8 @@ bool ldomXPointerEx::prevVisibleWordStart( bool thisBlockOnly )
         while ( _data->getOffset()>0 ) {
             if ( IsWordSeparator(text[ _data->getOffset()-1 ]) )
                 break;
+            if ( dygar(text[ _data->getOffset()-1 ]) )
+                break;
             foundNonSeparator = true;
             _data->addOffset(-1);
             if ( canWrapWordBefore( text[_data->getOffset()] ) ) // CJK char
@@ -12347,6 +12354,8 @@ bool ldomXPointerEx::prevVisibleWordEnd( bool thisBlockOnly )
         // skip non-separators
         while ( _data->getOffset()>0 ) {
             if ( IsWordSeparator(text[ _data->getOffset()-1 ]) )
+                break;
+            if ( dygar(text[ _data->getOffset()-1 ]) )
                 break;
             if ( moved && canWrapWordAfter( text[_data->getOffset()] ) ) // We moved to a CJK char
                 return true;
@@ -12406,6 +12415,8 @@ bool ldomXPointerEx::nextVisibleWordStart( bool thisBlockOnly )
         while ( _data->getOffset()<textLen ) {
             if ( IsWordSeparator(text[ _data->getOffset() ]) )
                 break;
+            if ( dygar(text[ _data->getOffset() ]) )
+                break;
             if ( moved && canWrapWordBefore( text[_data->getOffset()] ) ) // We moved to a CJK char
                 return true;
             moved = true;
@@ -12446,6 +12457,8 @@ bool ldomXPointerEx::thisVisibleWordEnd(bool thisBlockOnly)
     // skip non-separators
     while ( _data->getOffset()<textLen ) {
         if ( IsWordSeparator(text[ _data->getOffset() ]) )
+            break;
+        if ( dygar(text[ _data->getOffset() ]) )
             break;
         moved = true;
         _data->addOffset(1);
@@ -12489,6 +12502,8 @@ bool ldomXPointerEx::nextVisibleWordEnd( bool thisBlockOnly )
         while ( _data->getOffset()<textLen ) {
             if ( IsWordSeparator(text[ _data->getOffset() ]) )
                 break;
+            if ( dygar(text[ _data->getOffset() ]) )
+                break;
             nonSeparatorFound = true;
             _data->addOffset(1);
             if ( canWrapWordAfter( text[_data->getOffset()] ) ) // We moved to a CJK char
@@ -12504,6 +12519,8 @@ bool ldomXPointerEx::nextVisibleWordEnd( bool thisBlockOnly )
         // skip non-separators
         while ( _data->getOffset()<textLen ) {
             if ( IsWordSeparator(text[ _data->getOffset() ]) )
+                break;
+            if ( dygar(text[ _data->getOffset() ]) )
                 break;
             nonSeparatorFound = true;
             _data->addOffset(1);

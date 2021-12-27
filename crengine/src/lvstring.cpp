@@ -4482,6 +4482,7 @@ bool lStr_isWordSeparator( lChar32 ch )
     if (ch >= 0x41 && ch <= 0x5A) return false; // uppercase ascii letters
     if (ch >= 0x30 && ch <= 0x39) return false; // digits
     if (ch == 0xAD ) return false; // soft-hyphen, considered now as part of word
+    // if (ch == '.' || ch == '"' || ch == '?' || ch == '!' || ch == '(' || ch == ')' || ch == '\'' || ch == U'‘' || ch == U'’') return false;
     // All other below 0xC0 are word separators:
     //   < 0x30 space, !"#$%&'()*+,-./
     //   < 0x41 :;<=>?@
